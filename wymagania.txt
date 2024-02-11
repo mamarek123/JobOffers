@@ -1,0 +1,11 @@
+# jako klient aplikacji chcê widzieæ oferty pracy dla Junior Java Developera
+1. korzystamy ze zdalnego serwera HTTP (skrypt który pobiera oferty ze stron WWW)
+2. klient musi u¿ywaæ tokena, ¿eby zobaczyæ oferty
+3. klient mo¿e siê zarejestrowaæ
+4. aktualizacja ofert w bazie danych jest co 3 godziny (wtedy odpytujemy zdalny serwer z pkt. 1)
+5. oferty w bazie nie mog¹ siê powtarzaæ (decyduje url oferty)
+6. klient mo¿e pobraæ jedn¹ ofertê pracy poprzez unikalne Id
+7. klient mo¿e pobraæ wszystkie dostêpne oferty kiedy jest zautoryzowany
+8. jeœli klient w ci¹gu 60 minut robi wiêcej ni¿ jedno zapytanie, to dane powinny pobieraæ siê z cache (poniewa¿ pobieranie z bazy danych kosztujê pieni¹dze naszego klienta)
+9. klient mo¿e rêcznie dodaæ ofertê pracy
+10. ka¿da oferta pracy ma (link do oferty, nazwê stanowiska, nazwê firmy, zarobki (mog¹ byæ wide³ki))
