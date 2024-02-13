@@ -30,7 +30,7 @@ class OfferTestRepositoryImplementation implements OfferRepository{
 
     @Override
     public Optional<List<Offer>> getAllOffers() {
-        return Optional.empty();
+        return Optional.of(repository.values().stream().toList());
     }
 
     private Long generateNewId() {
