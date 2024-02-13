@@ -6,7 +6,6 @@ import pl.mamarek123.JobOffers.domain.offer.DTO.OfferResponseDTO;
 import pl.mamarek123.JobOffers.domain.offer.DTO.OffersResponseDTO;
 import pl.mamarek123.JobOffers.domain.offer.DTO.ResultStatus;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;

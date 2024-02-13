@@ -1,6 +1,5 @@
 package pl.mamarek123.JobOffers.domain.offer;
 
-import org.mockito.internal.matchers.Null;
 
 import java.util.List;
 import java.util.Map;
