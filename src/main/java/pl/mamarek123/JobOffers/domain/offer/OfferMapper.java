@@ -40,15 +40,24 @@ class OfferMapper {
         return offerResponseDTODTO;
     }
 
-    public static OffersResponseDTO listOfOffersToOffersResponseDTO(List<Offer> offers){
+    public static OffersResponseDTO listOfOffersToOffersResponseDTO(List<Offer> offers, ResultStatus status, String message){
         List<OfferDTO> offerDTOList = offers.stream()
                 .map(OfferMapper::offerToOfferDTO)
                 .collect(Collectors.toList());
         OffersResponseDTO offersResponseDTO = OffersResponseDTO.builder()
                 .offers(offerDTOList)
-                .status(ResultStatus.SUCCESS)
-                .message("Success")
+                .status(status)
+                .message(message)
                 .build();
         return offersResponseDTO;
     }
+
+    public static List<Offer> offersResponseDTOtoListOfOffers(OffersResponseDTO offersResponseDTO){
+        List<Offer> offersList = offersResponseDTO.offers().stream()
+                .map(OfferMapper::offerDTOToOffer)
+                .collect(Collectors.toList());
+        return offersList;
+    }
+
+
 }

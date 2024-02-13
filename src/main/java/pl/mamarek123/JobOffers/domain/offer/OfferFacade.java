@@ -24,6 +24,7 @@ import java.util.Optional;
 public class OfferFacade {
 
     OfferRepository offerRepository;
+    OfferFetching offerFetcher;
     public OfferResponseDTO saveOffer(OfferDTO offerDTO){
         Offer offer = OfferMapper.offerDTOToOffer(offerDTO);
 
@@ -43,8 +44,46 @@ public class OfferFacade {
             return createEmptySuccesOffersResponseDTO();
         }
         List<Offer> offers = offerRepository.getAllOffers().get();
-        OffersResponseDTO offersResponseDTO = OfferMapper.listOfOffersToOffersResponseDTO(offers);
+        OffersResponseDTO offersResponseDTO = OfferMapper.listOfOffersToOffersResponseDTO(offers,ResultStatus.SUCCESS,"All offers");
         return offersResponseDTO;
+    }
+
+    public OfferResponseDTO findOfferById(Long id){
+        Optional<Offer> offer = offerRepository.getOfferByID(id);
+        if (offer.isEmpty()) {
+            return OfferResponseDTO.builder()
+                    .offer(null)
+                    .status(ResultStatus.FAILURE)
+                    .message("Offer with this ID not found")
+                    .build();
+        }
+        OfferDTO offerDTO = OfferMapper.offerToOfferDTO(offer.get());
+        return OfferResponseDTO.builder()
+                .offer(offerDTO)
+                .status(ResultStatus.SUCCESS)
+                .message("Offer found")
+                .build();
+    }
+
+    public OffersResponseDTO fetchAllOffersAndSaveAllIfNotExists(){
+        OffersResponseDTO fetchedOffersDTO = offerFetcher.fetchOffers();
+        List<Offer> fetchedOfferList = OfferMapper.offersResponseDTOtoListOfOffers(fetchedOffersDTO);
+
+        List<Offer> addedOffers = addFetchedOffersToRepositoryIfNotAddedYet(fetchedOfferList);
+
+        OffersResponseDTO offersResponse = OfferMapper.listOfOffersToOffersResponseDTO(addedOffers,ResultStatus.SUCCESS,"Returning new added offers");
+        return offersResponse;
+    }
+
+    private List<Offer> addFetchedOffersToRepositoryIfNotAddedYet(List<Offer> offerList) {
+        List<Offer> addedOffers = new ArrayList<>();
+        offerList.forEach(offer -> {
+            if (!RepositoryExistingOfferChecker.existsByURL(offer, offerRepository)) {
+                offerRepository.addOffer(offer);
+                addedOffers.add(offer);
+            }
+        });
+        return addedOffers;
     }
 
     private static OffersResponseDTO createEmptySuccesOffersResponseDTO() {
