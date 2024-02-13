@@ -2,13 +2,13 @@ package pl.mamarek123.JobOffers.domain.offer;
 
 import org.mockito.internal.matchers.Null;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class OfferTestRepositoryImplementation implements OfferRepository{
-    public Map<Long,Offer> repository = new ConcurrentHashMap<Long,Offer>();
-
+class OfferTestRepositoryImplementation implements OfferRepository{
+    public Map<Long,Offer> repository = new ConcurrentHashMap<>();
 
     @Override
     public Optional<Offer> getOfferByID(Long id) {
@@ -26,6 +26,11 @@ public class OfferTestRepositoryImplementation implements OfferRepository{
     public Optional<Offer> addOffer(Offer offer) {
         repository.put(generateNewId(),offer);
         return Optional.ofNullable(offer);
+    }
+
+    @Override
+    public Optional<List<Offer>> getAllOffers() {
+        return Optional.empty();
     }
 
     private Long generateNewId() {

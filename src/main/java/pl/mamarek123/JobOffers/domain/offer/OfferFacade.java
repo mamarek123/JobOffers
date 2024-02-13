@@ -2,7 +2,12 @@ package pl.mamarek123.JobOffers.domain.offer;
 
 import lombok.AllArgsConstructor;
 import pl.mamarek123.JobOffers.domain.offer.DTO.OfferDTO;
+import pl.mamarek123.JobOffers.domain.offer.DTO.OfferResponseDTO;
+import pl.mamarek123.JobOffers.domain.offer.DTO.OffersResponseDTO;
+import pl.mamarek123.JobOffers.domain.offer.DTO.ResultStatus;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 /*
@@ -19,17 +24,35 @@ import java.util.Optional;
 public class OfferFacade {
 
     OfferRepository offerRepository;
-    public OfferDTO addNewOffer(OfferDTO offerDTO){
-        Offer offer = OfferMapper.OfferDTOtoOffer(offerDTO);
+    public OfferResponseDTO saveOffer(OfferDTO offerDTO){
+        Offer offer = OfferMapper.offerDTOToOffer(offerDTO);
 
         if (RepositoryExistingOfferChecker.existsByURL(offer,offerRepository)){
-            return OfferMapper.OfferToOfferDto(offer,"Failed", "Offer already exists");
+            return OfferMapper.offerToOfferResponseDto(offer, ResultStatus.FAILURE, "Offer already exists");
         }
 
         Optional<Offer> addedOffer = offerRepository.addOffer(offer);
         if(addedOffer.isEmpty()){
             throw new RepositoryException("Failed to add offer to repository");
         }
-        return OfferMapper.OfferToOfferDto(addedOffer.get(), "Succes", "Offer added");
+        return OfferMapper.offerToOfferResponseDto(addedOffer.get(), ResultStatus.SUCCESS, "Offer added");
     }
+
+    public OffersResponseDTO findAllOffers() {
+        if (offerRepository.getAllOffers().isEmpty()) {
+            return createEmptySuccesOffersResponseDTO();
+        }
+        List<Offer> offers = offerRepository.getAllOffers().get();
+        OffersResponseDTO offersResponseDTO = OfferMapper.listOfOffersToOffersResponseDTO(offers);
+        return offersResponseDTO;
+    }
+
+    private static OffersResponseDTO createEmptySuccesOffersResponseDTO() {
+        return OffersResponseDTO.builder().
+                offers(new ArrayList<>()).
+                status(ResultStatus.SUCCESS).
+                message("There are no offers").
+                build();
+    }
+
 }
