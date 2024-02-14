@@ -3,7 +3,7 @@ package pl.mamarek123.JobOffers.domain.offer;
 import pl.mamarek123.JobOffers.domain.offer.DTO.OfferDTO;
 import pl.mamarek123.JobOffers.domain.offer.DTO.OfferResponseDTO;
 import pl.mamarek123.JobOffers.domain.offer.DTO.OffersResponseDTO;
-import pl.mamarek123.JobOffers.domain.offer.DTO.ResultStatus;
+import pl.mamarek123.JobOffers.domain.ResultStatus;
 
 import java.util.List;
 import java.util.stream.Collectors;

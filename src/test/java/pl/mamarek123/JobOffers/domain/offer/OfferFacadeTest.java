@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 import pl.mamarek123.JobOffers.domain.offer.DTO.OfferDTO;
 import pl.mamarek123.JobOffers.domain.offer.DTO.OfferResponseDTO;
 import pl.mamarek123.JobOffers.domain.offer.DTO.OffersResponseDTO;
-import pl.mamarek123.JobOffers.domain.offer.DTO.ResultStatus;
+import pl.mamarek123.JobOffers.domain.ResultStatus;
 
 import java.util.HashSet;
 import java.util.List;
@@ -15,7 +15,8 @@ import static org.junit.jupiter.api.Assertions.*;
 class OfferFacadeTest {
 
     OfferRepository offerRepository = new OfferTestRepositoryImplementation();
-    OfferFacade offerFacade = new OfferFacade(offerRepository);
+    OfferFetching offerFetcher = new OfferFetcherTestImplementation();
+    OfferFacade offerFacade = new OfferFacade(offerRepository,offerFetcher);
 
     @Test
     public void should_correctly_retrieve_all_added_offers(){

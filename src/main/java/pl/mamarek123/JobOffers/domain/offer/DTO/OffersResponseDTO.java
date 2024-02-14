@@ -1,6 +1,7 @@
 package pl.mamarek123.JobOffers.domain.offer.DTO;
 
 import lombok.Builder;
+import pl.mamarek123.JobOffers.domain.ResultStatus;
 
 import java.util.List;
 
