@@ -5,7 +5,7 @@ import pl.mamarek123.JobOffers.domain.loginAndRegister.DTO.UserRequestDTO;
 import pl.mamarek123.JobOffers.domain.loginAndRegister.DTO.UserResultDTO;
 
 class UserMapper {
-    static UserResultDTO userToUserResultDTOP(User user, ResultStatus status, String message) {
+    static UserResultDTO userToUserResultDTO(User user, ResultStatus status, String message) {
         UserResultDTO userResultDTO = UserResultDTO.builder().
                 email(user.email()).
                 password(user.password()).

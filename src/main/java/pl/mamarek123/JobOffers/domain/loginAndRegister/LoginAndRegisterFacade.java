@@ -16,10 +16,11 @@ public class LoginAndRegisterFacade {
         Optional<User> user = registerRepostiory.getUserByUsername(username);
 
         if(user.isEmpty()){
-            UserResultDTO emptyUserResult = UserMapper.userToUserResultDTOP(null, ResultStatus.FAILURE, "User Not Found");
+            UserResultDTO emptyUserResult = UserMapper.userToUserResultDTO(null, ResultStatus.FAILURE, "User Not Found");
+            return emptyUserResult;
         }
 
-        UserResultDTO userResult = UserMapper.userToUserResultDTOP(user.get(), ResultStatus.SUCCESS, "Success");
+        UserResultDTO userResult = UserMapper.userToUserResultDTO(user.get(), ResultStatus.SUCCESS, "Success");
         return userResult;
     }
 
@@ -27,18 +28,18 @@ public class LoginAndRegisterFacade {
         User user = UserMapper.userRequestDTOToUser(userRequestDTO);
 
         if (registerRepostioryCheckerIfExists.checkIfUserWithGivenEmailExists(user.email())){
-            UserResultDTO existingUserResult = UserMapper.userToUserResultDTOP(null, ResultStatus.FAILURE, "User with given email already exists");
+            UserResultDTO existingUserResult = UserMapper.userToUserResultDTO(null, ResultStatus.FAILURE, "User with given email already exists");
             return existingUserResult;
         }
 
         if (registerRepostioryCheckerIfExists.checkIfUserWithGivenUsernameExists(user.username())){
-            UserResultDTO existingUserResult = UserMapper.userToUserResultDTOP(null, ResultStatus.FAILURE, "User with given username already exists");
+            UserResultDTO existingUserResult = UserMapper.userToUserResultDTO(null, ResultStatus.FAILURE, "User with given username already exists");
             return existingUserResult;
         }
 
         Optional<UserResultDTO> optionalUserResultDTO = registerRepostiory.RegisterUser(user);
         if(optionalUserResultDTO.isEmpty()){
-            return UserMapper.userToUserResultDTOP(null,ResultStatus.FAILURE, "Failed to register in database");
+            return UserMapper.userToUserResultDTO(null,ResultStatus.FAILURE, "Failed to register in database");
         }
         return optionalUserResultDTO.get();
     }
