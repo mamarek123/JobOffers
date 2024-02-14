@@ -9,5 +9,5 @@ interface LoginAndRegisterRepostiory {
 
     Optional<User> getUserByEmail(String email);
 
-    Optional<UserResultDTO> RegisterUser(User user);
+    Optional<UserResultDTO> registerUser(User user);
 }

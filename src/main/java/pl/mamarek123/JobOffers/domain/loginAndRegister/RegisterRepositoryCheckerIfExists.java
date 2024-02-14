@@ -1,7 +1,10 @@
 package pl.mamarek123.JobOffers.domain.loginAndRegister;
 
+import lombok.AllArgsConstructor;
+
 import java.util.Optional;
 
+@AllArgsConstructor
 class RegisterRepositoryCheckerIfExists {
     private LoginAndRegisterRepostiory registerRepostiory;
     boolean checkIfUserWithGivenEmailExists(String email) {

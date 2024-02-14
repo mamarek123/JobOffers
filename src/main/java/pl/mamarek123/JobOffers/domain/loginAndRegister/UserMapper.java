@@ -6,6 +6,10 @@ import pl.mamarek123.JobOffers.domain.loginAndRegister.DTO.UserResultDTO;
 
 class UserMapper {
     static UserResultDTO userToUserResultDTO(User user, ResultStatus status, String message) {
+        if(null == user){
+            UserResultDTO emptyUserResultDTO = getResultDTOWithEmptyUser(status, message);
+            return emptyUserResultDTO;
+        }
         UserResultDTO userResultDTO = UserResultDTO.builder().
                 email(user.email()).
                 password(user.password()).
@@ -14,6 +18,17 @@ class UserMapper {
                 status(status).
                 build();
         return userResultDTO;
+    }
+
+    static UserResultDTO getResultDTOWithEmptyUser(ResultStatus status, String message) {
+        UserResultDTO emptyUserResultDTO = UserResultDTO.builder().
+                email(null).
+                password(null).
+                username(null).
+                message(message).
+                status(status).
+                build();
+        return emptyUserResultDTO;
     }
 
     static User userRequestDTOToUser(UserRequestDTO userRequestDTO) {

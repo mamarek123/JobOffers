@@ -1,16 +1,19 @@
 package pl.mamarek123.JobOffers.domain.loginAndRegister;
 
-import lombok.AllArgsConstructor;
 import pl.mamarek123.JobOffers.domain.ResultStatus;
 import pl.mamarek123.JobOffers.domain.loginAndRegister.DTO.UserRequestDTO;
 import pl.mamarek123.JobOffers.domain.loginAndRegister.DTO.UserResultDTO;
 
 import java.util.Optional;
 
-@AllArgsConstructor
 public class LoginAndRegisterFacade {
-    private LoginAndRegisterRepostiory registerRepostiory;
-    private RegisterRepositoryCheckerIfExists registerRepostioryCheckerIfExists;
+    public LoginAndRegisterFacade(LoginAndRegisterRepostiory registerRepostiory) {
+        this.registerRepostiory = registerRepostiory;
+        registerRepostioryCheckerIfExists = new RegisterRepositoryCheckerIfExists(registerRepostiory);
+    }
+
+    private final LoginAndRegisterRepostiory registerRepostiory;
+    private final RegisterRepositoryCheckerIfExists registerRepostioryCheckerIfExists;
 
     public UserResultDTO findByUsername(String username){
         Optional<User> user = registerRepostiory.getUserByUsername(username);
@@ -37,7 +40,7 @@ public class LoginAndRegisterFacade {
             return existingUserResult;
         }
 
-        Optional<UserResultDTO> optionalUserResultDTO = registerRepostiory.RegisterUser(user);
+        Optional<UserResultDTO> optionalUserResultDTO = registerRepostiory.registerUser(user);
         if(optionalUserResultDTO.isEmpty()){
             return UserMapper.userToUserResultDTO(null,ResultStatus.FAILURE, "Failed to register in database");
         }
