@@ -1,49 +1,38 @@
 package pl.mamarek123.JobOffers.domain.loginAndRegister;
 
-import pl.mamarek123.JobOffers.domain.ResultStatus;
-import pl.mamarek123.JobOffers.domain.loginAndRegister.DTO.UserRequestDTO;
-import pl.mamarek123.JobOffers.domain.loginAndRegister.DTO.UserResultDTO;
+import org.springframework.security.authentication.BadCredentialsException;
+import pl.mamarek123.JobOffers.domain.loginAndRegister.DTO.UserRequestDto;
+import pl.mamarek123.JobOffers.domain.loginAndRegister.DTO.UserResultDto;
+import pl.mamarek123.JobOffers.domain.loginAndRegister.error.UserAlreadyExistsException;
 
 import java.util.Optional;
 
 public class LoginAndRegisterFacade {
-    public LoginAndRegisterFacade(LoginAndRegisterRepostiory registerRepostiory) {
+    LoginAndRegisterFacade(LoginAndRegisterRepostiory registerRepostiory) {
         this.registerRepostiory = registerRepostiory;
-        registerRepostioryCheckerIfExists = new RegisterRepositoryCheckerIfExists(registerRepostiory);
     }
 
     private final LoginAndRegisterRepostiory registerRepostiory;
-    private final RegisterRepositoryCheckerIfExists registerRepostioryCheckerIfExists;
 
-    public UserResultDTO findByUsername(String username){
-        Optional<User> user = registerRepostiory.getUserByUsername(username);
-
-        if(user.isEmpty()){
-            UserResultDTO emptyUserResult = UserMapper.userToUserResultDTO(null, ResultStatus.FAILURE, "User Not Found");
-            return emptyUserResult;
-        }
-
-        UserResultDTO userResult = UserMapper.userToUserResultDTO(user.get(), ResultStatus.SUCCESS, "Success");
-        return userResult;
+    public UserResultDto findByUsername(String username){
+        User user = registerRepostiory.findByUsername(username).orElseThrow(() -> new BadCredentialsException("User not found"));
+        return UserMapper.userToUserResultDto(user);
     }
 
-    public UserResultDTO register(UserRequestDTO userRequestDTO){
-        User user = UserMapper.userRequestDTOToUser(userRequestDTO);
-
-        if (registerRepostioryCheckerIfExists.checkIfUserWithGivenEmailExists(user.email())){
-            UserResultDTO existingUserResult = UserMapper.userToUserResultDTO(null, ResultStatus.FAILURE, "User with given email already exists");
-            return existingUserResult;
+    public UserResultDto register(UserRequestDto userRequestDto) {
+        // Check if a user with the given username already exists
+        if (registerRepostiory.existsByUsername(userRequestDto.username())) {
+            throw new UserAlreadyExistsException("User with username " + userRequestDto.username() + " already exists");
         }
 
-        if (registerRepostioryCheckerIfExists.checkIfUserWithGivenUsernameExists(user.username())){
-            UserResultDTO existingUserResult = UserMapper.userToUserResultDTO(null, ResultStatus.FAILURE, "User with given username already exists");
-            return existingUserResult;
+        // Check if a user with the given email already exists
+        if (registerRepostiory.existsByEmail(userRequestDto.email())) {
+            throw new UserAlreadyExistsException("User with email " + userRequestDto.email() + " already exists");
         }
 
-        Optional<UserResultDTO> optionalUserResultDTO = registerRepostiory.registerUser(user);
-        if(optionalUserResultDTO.isEmpty()){
-            return UserMapper.userToUserResultDTO(null,ResultStatus.FAILURE, "Failed to register in database");
-        }
-        return optionalUserResultDTO.get();
+        User user = UserMapper.userRequestDtoToUser(userRequestDto);
+        User savedUser = registerRepostiory.save(user);
+        return UserMapper.userToUserResultDto(savedUser);
     }
+
 }
