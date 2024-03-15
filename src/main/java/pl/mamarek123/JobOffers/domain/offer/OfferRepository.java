@@ -9,7 +9,6 @@ import java.util.Optional;
 @Repository
 interface OfferRepository extends MongoRepository<Offer, String> {
 
-    Optional<Offer> getOfferById(String id);
 
     boolean existsByOfferUrl(String url);
 

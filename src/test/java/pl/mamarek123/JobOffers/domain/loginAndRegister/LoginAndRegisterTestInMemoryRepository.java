@@ -7,13 +7,18 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.FluentQuery;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 
 public class LoginAndRegisterTestInMemoryRepository implements LoginAndRegisterRepostiory{
 
 
     //let's treat username as key
-    private final Map<String, User> userRepository = new HashMap<>();
+    private final Map<String, User> userRepository = new ConcurrentHashMap<>();
+
+    private String generateID(){
+        return UUID.randomUUID().toString();
+    }
 
     @Override
     public Optional<User> findByUsername(String username) {
@@ -37,7 +42,7 @@ public class LoginAndRegisterTestInMemoryRepository implements LoginAndRegisterR
 
     @Override
     public <S extends User> S save(S entity) {
-        User putUser = new User("newid", entity.username(), entity.getPassword(), entity.email());
+        User putUser = new User(generateID(), entity.username(), entity.getPassword(), entity.email());
         userRepository.put(putUser.username(),putUser);
         return (S) putUser;
     }

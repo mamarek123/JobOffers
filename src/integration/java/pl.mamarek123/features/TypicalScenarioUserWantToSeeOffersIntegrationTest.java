@@ -5,7 +5,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultActions;
-import org.testcontainers.shaded.com.fasterxml.jackson.databind.ObjectMapper;
 import pl.mamarek123.BaseIntegrationTest;
 
 import java.util.List;
@@ -13,11 +12,10 @@ import java.util.regex.Pattern;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import pl.mamarek123.JobOffers.domain.loginAndRegister.DTO.UserResultDto;
 import pl.mamarek123.JobOffers.domain.offer.DTO.OfferRequestDto;
 import pl.mamarek123.JobOffers.domain.offer.DTO.OfferResponseDto;
 import pl.mamarek123.JobOffers.infrastructure.offer.scheduler.HttpOffersScheduler;
-import pl.mamarek123.JobOffers.infrastructure.tokenandregister.controller.dto.TokenResponseDto;
+import pl.mamarek123.JobOffers.infrastructure.loginandregister.controller.dto.LoginResponseDto;
 import pl.mamarek123.SampleJobOfferResponse;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -93,7 +91,7 @@ public class TypicalScenarioUserWantToSeeOffersIntegrationTest extends BaseInteg
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk()).andReturn();
         String contentAsString = mvcResult.getResponse().getContentAsString();
-        TokenResponseDto tokenResponse = objectMapper.readValue(contentAsString, TokenResponseDto.class);
+        LoginResponseDto tokenResponse = objectMapper.readValue(contentAsString, LoginResponseDto.class);
         String token = tokenResponse.token();
         //then
         assertAll(

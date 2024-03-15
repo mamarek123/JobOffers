@@ -1,4 +1,4 @@
-package pl.mamarek123.JobOffers.infrastructure.tokenandregister.controller.error;
+package pl.mamarek123.JobOffers.infrastructure.loginandregister.controller.error;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import pl.mamarek123.JobOffers.domain.loginAndRegister.error.UserAlreadyExistsException;
 
 @ControllerAdvice
-public class TokenControllerErrorHandler {
+public class LoginAndRegisterControllerErrorHandler {
 
 
     private static final String BAD_CREDENTIALS = "Bad Credentials";
@@ -17,16 +17,15 @@ public class TokenControllerErrorHandler {
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ExceptionHandler(BadCredentialsException.class)
     @ResponseBody
-    public TokenErrorResponse handleBadCredentials() {
-        return new TokenErrorResponse(BAD_CREDENTIALS, HttpStatus.UNAUTHORIZED);
+    public LoginRegisterErrorResponse handleBadCredentials() {
+        return new LoginRegisterErrorResponse(BAD_CREDENTIALS, HttpStatus.UNAUTHORIZED);
     }
 
     @ResponseStatus(HttpStatus.CONFLICT)
     @ExceptionHandler(UserAlreadyExistsException.class)
     @ResponseBody
-    public TokenErrorResponse handleUserAlreadyExists(UserAlreadyExistsException e) {
-        // Use the message from the exception for the response
-        return new TokenErrorResponse(e.getMessage(), HttpStatus.CONFLICT);
+    public LoginRegisterErrorResponse handleUserAlreadyExists(UserAlreadyExistsException e) {
+        return new LoginRegisterErrorResponse(e.getMessage(), HttpStatus.CONFLICT);
     }
 
 }

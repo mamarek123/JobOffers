@@ -4,73 +4,68 @@ import org.junit.jupiter.api.Test;
 import org.springframework.security.authentication.BadCredentialsException;
 import pl.mamarek123.JobOffers.domain.loginAndRegister.DTO.UserRequestDto;
 import pl.mamarek123.JobOffers.domain.loginAndRegister.DTO.UserResultDto;
+import pl.mamarek123.JobOffers.domain.loginAndRegister.error.UserAlreadyExistsException;
+
+import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class LoginAndRegisterFacadeTest {
     LoginAndRegisterTestInMemoryRepository registerRepository = new LoginAndRegisterTestInMemoryRepository();
     LoginAndRegisterFacade loginAndRegisterFacade = new LoginAndRegisterFacade(registerRepository);
+
+
     @Test
     public void should_properly_register(){
         //given
-        User user = new User("testid","bartek","haslo","bartek@email.pl");
-        UserResultDto expectedUserResultDto = UserMapper.userToUserResultDto(user);
+        UserRequestDto userRequest = new UserRequestDto("bartek","haslo","bartek@email.pl");
         //when
-        UserRequestDto userRequestDto = new UserRequestDto(user.username(), user.email(), user.password());
-        UserResultDto userRegisterResultDTO = loginAndRegisterFacade.register(userRequestDto);
+        UserResultDto userRegisterResult = loginAndRegisterFacade.register(userRequest);
         //then
-        assertEquals(userRegisterResultDTO,expectedUserResultDto);
+        assertTrue(Objects.equals(userRequest.username(), userRegisterResult.username()) &&
+                Objects.equals(userRequest.password(), userRegisterResult.password()) &&
+                Objects.equals(userRequest.email(), userRegisterResult.email())
+        ,"expecting all fields to match");
     }
 
     @Test
     public void should_properly_find_registered_user_by_username(){
         //given
         String username  = "bartek";
-        User user = new User("1",username,"haslo","bartek@email.pl");
-        registerRepository.save(user);
-        UserResultDto expectedUserResultDto = UserMapper.userToUserResultDto(user);
+        UserRequestDto userRequest = new UserRequestDto(username,"haslo","bartek@email.pl");
+        loginAndRegisterFacade.register(userRequest);
         //when
         UserResultDto byUsername = loginAndRegisterFacade.findByUsername(username);
         //then
-        assertEquals(expectedUserResultDto,byUsername);
+        assertTrue(Objects.equals(userRequest.username(), byUsername.username()) &&
+                Objects.equals(userRequest.password(), byUsername.password()) &&
+                Objects.equals(userRequest.email(), byUsername.email()),
+                "Expecting all fields to match");
     }
 
     @Test
     public void should_throw_BadCredentialsException_when_searching_with_not_existing_username(){
-        String username  = "bartek";
-        User user = new User("1",username,"haslo","bartek@email.pl");
-        registerRepository.save(user);
-        UserResultDto emptyUser = UserMapper.userToUserResultDto(User.builder().build());
+        //given
+        UserRequestDto userRequest = new UserRequestDto("bartek","haslo","bartek@email.pl");
+        loginAndRegisterFacade.register(userRequest);
         //when && then
-        assertThrows(BadCredentialsException.class, () -> loginAndRegisterFacade.findByUsername("kamil"));
+        assertThrows(BadCredentialsException.class, () -> loginAndRegisterFacade.findByUsername("jacek"), "expecting BadCredentialsException");
     }
 
     @Test
-    public void should_return_empty_result_with_status_failure_and_message_user_with_given_email_already_exists_when_registering_with_taken_email_whether_username_taken_or_not(){
+    public void should_trow_UserAlreadyExistsException_if_email_or_username_already_exists(){
         //given
-        User user1 = new User("1","bartek","haslo","bartek@email.com");
-        registerRepository.save(user1);
-        UserRequestDto userWithSameEmailSameUsername = new UserRequestDto("bartek","bartek@email.com","password");
-        UserRequestDto userWithSameEmailNewUsername = new UserRequestDto("bartek2","bartek@email.com","password");
-        UserResultDto expectedResult = UserMapper.userToUserResultDto(User.builder().build());
-        //when
-        UserResultDto userResultDTO1 = loginAndRegisterFacade.register(userWithSameEmailNewUsername);
-        UserResultDto userResultDTO2 = loginAndRegisterFacade.register(userWithSameEmailSameUsername);
-        //then
-        assertEquals(expectedResult,userResultDTO1);
-        assertEquals(expectedResult,userResultDTO2);
+        UserRequestDto userRequest = new UserRequestDto("bartek","haslo","bartek@email.pl");
+        loginAndRegisterFacade.register(userRequest);
+        UserRequestDto takenUsername = new UserRequestDto("bartek", "haslo", "bartek@email.pl");
+        UserRequestDto takenEmail = new UserRequestDto("bartek2", "haslo", "bartek@email.pl");
+
+        //when & then
+        assertThrows(UserAlreadyExistsException.class, () -> loginAndRegisterFacade.register(takenUsername), "expecting UserAlreadyExistsException, username already taken");
+        assertThrows(UserAlreadyExistsException.class, () -> loginAndRegisterFacade.register(takenEmail), "expecting BadCredentialsException");
+
+
     }
 
-    @Test
-    public void should_return_empty_result_with_status_failure_and_message_user_with_given_username_already_exists_when_registering_with_taken_username_and_not_taken_email(){
-        //given
-        User user1 = new User("1","bartek","haslo","bartek@email.pl");
-        registerRepository.save(user1);
-        UserRequestDto userWithNewEmailSameUsername = new UserRequestDto("bartek","bartek2@email.com","password");
-        UserResultDto expectedResult = UserMapper.userToUserResultDto(User.builder().build());
-        //when
-        UserResultDto registerResultDTO = loginAndRegisterFacade.register(userWithNewEmailSameUsername);
-        //then
-        assertEquals(expectedResult,registerResultDTO);
-    }
+
 }

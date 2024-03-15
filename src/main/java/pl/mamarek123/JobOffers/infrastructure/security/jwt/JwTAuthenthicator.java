@@ -7,8 +7,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Component;
-import pl.mamarek123.JobOffers.infrastructure.tokenandregister.controller.dto.TokenRequestDto;
-import pl.mamarek123.JobOffers.infrastructure.tokenandregister.controller.dto.TokenResponseDto;
+import pl.mamarek123.JobOffers.infrastructure.loginandregister.controller.dto.LoginRequestDto;
+import pl.mamarek123.JobOffers.infrastructure.loginandregister.controller.dto.LoginResponseDto;
 import com.auth0.jwt.algorithms.Algorithm;
 import java.time.*;
 
@@ -20,13 +20,13 @@ public class JwTAuthenthicator {
     private final Clock clock;
     private final JwtConfigurationProperties properties;
 
-    public TokenResponseDto authenticateAndGenerateToken(TokenRequestDto loginRequest) {
+    public LoginResponseDto authenticateAndGenerateToken(LoginRequestDto loginRequest) {
         Authentication authenticate = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequest.username(), loginRequest.password()));
         User user = (User) authenticate.getPrincipal();
         String token = createToken(user);
         String username = user.getUsername();
-        return  TokenResponseDto.builder()
+        return  LoginResponseDto.builder()
                 .token(token)
                 .username(username)
                 .build();

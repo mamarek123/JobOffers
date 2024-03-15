@@ -1,4 +1,4 @@
-package pl.mamarek123.JobOffers.infrastructure.tokenandregister.controller;
+package pl.mamarek123.JobOffers.infrastructure.loginandregister.controller;
 
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import pl.mamarek123.JobOffers.domain.loginAndRegister.DTO.UserRequestDto;
 import pl.mamarek123.JobOffers.domain.loginAndRegister.DTO.UserResultDto;
 import pl.mamarek123.JobOffers.domain.loginAndRegister.LoginAndRegisterFacade;
-import pl.mamarek123.JobOffers.infrastructure.tokenandregister.controller.dto.RegisterResponseDto;
+import pl.mamarek123.JobOffers.infrastructure.loginandregister.controller.dto.RegisterResponseDto;
 
 import javax.validation.Valid;
 

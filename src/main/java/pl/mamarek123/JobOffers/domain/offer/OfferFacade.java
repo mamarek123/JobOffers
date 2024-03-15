@@ -33,7 +33,7 @@ public class OfferFacade {
     }
 
     public OfferResponseDto findOfferById(String id) {
-        Optional<Offer> offer = offerRepository.getOfferById(id);
+        Optional<Offer> offer = offerRepository.findById(id);
         if (offer.isEmpty()) {
             throw new OfferNotExistingException("Offer with id:" + id + " does not exist");
         }
