@@ -10,7 +10,7 @@ import pl.mamarek123.JobOffers.domain.offer.error.OfferNotExistingException;
 import pl.mamarek123.JobOffers.infrastructure.offer.controller.OfferController;
 
 @ControllerAdvice(assignableTypes = {OfferController.class})
-public class offerControllerErrorHandler extends ResponseEntityExceptionHandler {
+public class OfferControllerErrorHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(OfferAlreadyExistsException.class)
     public ResponseEntity<String> handleOfferAlreadyExists(OfferAlreadyExistsException ex) {

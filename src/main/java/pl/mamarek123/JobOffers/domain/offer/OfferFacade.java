@@ -1,8 +1,8 @@
 package pl.mamarek123.JobOffers.domain.offer;
 
 import lombok.AllArgsConstructor;
-import pl.mamarek123.JobOffers.domain.offer.DTO.OfferRequestDto;
-import pl.mamarek123.JobOffers.domain.offer.DTO.OfferResponseDto;
+import pl.mamarek123.JobOffers.domain.offer.dto.OfferRequestDto;
+import pl.mamarek123.JobOffers.domain.offer.dto.OfferResponseDto;
 import pl.mamarek123.JobOffers.domain.offer.error.OfferAlreadyExistsException;
 import pl.mamarek123.JobOffers.domain.offer.error.OfferNotExistingException;
 

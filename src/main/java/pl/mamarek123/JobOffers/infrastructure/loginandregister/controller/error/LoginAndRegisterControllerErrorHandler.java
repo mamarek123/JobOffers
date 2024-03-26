@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
-import pl.mamarek123.JobOffers.domain.loginAndRegister.error.UserAlreadyExistsException;
+import pl.mamarek123.JobOffers.domain.loginandregister.error.UserAlreadyExistsException;
 
 @ControllerAdvice
 public class LoginAndRegisterControllerErrorHandler {

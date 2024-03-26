@@ -1,7 +1,7 @@
-package pl.mamarek123.JobOffers.domain.loginAndRegister;
+package pl.mamarek123.JobOffers.domain.loginandregister;
 
-import pl.mamarek123.JobOffers.domain.loginAndRegister.DTO.UserRequestDto;
-import pl.mamarek123.JobOffers.domain.loginAndRegister.DTO.UserResultDto;
+import pl.mamarek123.JobOffers.domain.loginandregister.DTO.UserRequestDto;
+import pl.mamarek123.JobOffers.domain.loginandregister.DTO.UserResultDto;
 
 class UserMapper {
     static UserResultDto userToUserResultDto(User user) {

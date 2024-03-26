@@ -1,4 +1,4 @@
-package pl.mamarek123.JobOffers.domain.loginAndRegister;
+package pl.mamarek123.JobOffers.domain.loginandregister;
 
 import lombok.Builder;
 import org.springframework.data.annotation.Id;

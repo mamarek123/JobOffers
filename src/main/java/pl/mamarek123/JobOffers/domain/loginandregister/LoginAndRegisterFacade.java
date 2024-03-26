@@ -1,11 +1,9 @@
-package pl.mamarek123.JobOffers.domain.loginAndRegister;
+package pl.mamarek123.JobOffers.domain.loginandregister;
 
 import org.springframework.security.authentication.BadCredentialsException;
-import pl.mamarek123.JobOffers.domain.loginAndRegister.DTO.UserRequestDto;
-import pl.mamarek123.JobOffers.domain.loginAndRegister.DTO.UserResultDto;
-import pl.mamarek123.JobOffers.domain.loginAndRegister.error.UserAlreadyExistsException;
-
-import java.util.Optional;
+import pl.mamarek123.JobOffers.domain.loginandregister.DTO.UserRequestDto;
+import pl.mamarek123.JobOffers.domain.loginandregister.DTO.UserResultDto;
+import pl.mamarek123.JobOffers.domain.loginandregister.error.UserAlreadyExistsException;
 
 public class LoginAndRegisterFacade {
     LoginAndRegisterFacade(LoginAndRegisterRepostiory registerRepostiory) {

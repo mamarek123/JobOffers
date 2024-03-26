@@ -1,4 +1,4 @@
-package pl.mamarek123.JobOffers.domain.offer.DTO;
+package pl.mamarek123.JobOffers.domain.offer.dto;
 
 import lombok.Builder;
 

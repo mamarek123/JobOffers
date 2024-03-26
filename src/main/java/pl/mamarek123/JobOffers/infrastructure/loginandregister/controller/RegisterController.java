@@ -7,9 +7,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import pl.mamarek123.JobOffers.domain.loginAndRegister.DTO.UserRequestDto;
-import pl.mamarek123.JobOffers.domain.loginAndRegister.DTO.UserResultDto;
-import pl.mamarek123.JobOffers.domain.loginAndRegister.LoginAndRegisterFacade;
+import pl.mamarek123.JobOffers.domain.loginandregister.DTO.UserRequestDto;
+import pl.mamarek123.JobOffers.domain.loginandregister.DTO.UserResultDto;
+import pl.mamarek123.JobOffers.domain.loginandregister.LoginAndRegisterFacade;
 import pl.mamarek123.JobOffers.infrastructure.loginandregister.controller.dto.RegisterResponseDto;
 
 import javax.validation.Valid;

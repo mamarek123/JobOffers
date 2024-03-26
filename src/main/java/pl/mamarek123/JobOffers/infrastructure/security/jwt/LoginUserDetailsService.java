@@ -4,9 +4,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import pl.mamarek123.JobOffers.domain.loginAndRegister.DTO.UserRequestDto;
-import pl.mamarek123.JobOffers.domain.loginAndRegister.DTO.UserResultDto;
-import pl.mamarek123.JobOffers.domain.loginAndRegister.LoginAndRegisterFacade;
+import pl.mamarek123.JobOffers.domain.loginandregister.DTO.UserResultDto;
+import pl.mamarek123.JobOffers.domain.loginandregister.LoginAndRegisterFacade;
 
 import java.util.Collections;
 

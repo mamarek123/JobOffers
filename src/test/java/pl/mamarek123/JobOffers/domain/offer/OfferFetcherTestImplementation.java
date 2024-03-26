@@ -1,6 +1,6 @@
 package pl.mamarek123.JobOffers.domain.offer;
 
-import pl.mamarek123.JobOffers.domain.offer.DTO.OfferRequestDto;
+import pl.mamarek123.JobOffers.domain.offer.dto.OfferRequestDto;
 
 import java.util.ArrayList;
 import java.util.List;

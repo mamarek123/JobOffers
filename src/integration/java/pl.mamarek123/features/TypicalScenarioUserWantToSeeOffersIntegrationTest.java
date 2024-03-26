@@ -12,8 +12,8 @@ import java.util.regex.Pattern;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import pl.mamarek123.JobOffers.domain.offer.DTO.OfferRequestDto;
-import pl.mamarek123.JobOffers.domain.offer.DTO.OfferResponseDto;
+import pl.mamarek123.JobOffers.domain.offer.dto.OfferRequestDto;
+import pl.mamarek123.JobOffers.domain.offer.dto.OfferResponseDto;
 import pl.mamarek123.JobOffers.infrastructure.offer.scheduler.HttpOffersScheduler;
 import pl.mamarek123.JobOffers.infrastructure.loginandregister.controller.dto.LoginResponseDto;
 import pl.mamarek123.SampleJobOfferResponse;

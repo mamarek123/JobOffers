@@ -9,10 +9,9 @@ import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.util.UriComponentsBuilder;
-import pl.mamarek123.JobOffers.domain.offer.DTO.OfferRequestDto;
+import pl.mamarek123.JobOffers.domain.offer.dto.OfferRequestDto;
 import pl.mamarek123.JobOffers.domain.offer.OfferFetching;
 
-import java.util.Collections;
 import java.util.List;
 
 @AllArgsConstructor

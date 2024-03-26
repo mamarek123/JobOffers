@@ -1,6 +1,5 @@
-package pl.mamarek123.JobOffers.domain.loginAndRegister;
+package pl.mamarek123.JobOffers.domain.loginandregister;
 
-import lombok.Builder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

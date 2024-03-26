@@ -1,4 +1,4 @@
-package pl.mamarek123.JobOffers.domain.loginAndRegister;
+package pl.mamarek123.JobOffers.domain.loginandregister;
 
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
